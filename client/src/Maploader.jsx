@@ -43,7 +43,7 @@ function Maploader(){
     }, [])
 
     function handleSubmit(i){ 
-        var index = i - 1
+        var index = i
        var seatRef = firebase.database().ref('/' + index)
         seatRef.once('value', snapshot => { 
             var chosenSeat = snapshot.val()

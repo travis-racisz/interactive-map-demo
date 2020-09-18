@@ -9,14 +9,14 @@ function Map(props){
     }
 
     function handleClick(){ 
-       var index = props.index + 1  
+       var index = props.index 
         props.updateStyle(index)
     }
 
     return( 
         <>
             <text 
-                display = {hover || props.seatStyle === props.index + 1 ? "block" : "none"}
+                display = {hover || props.seatStyle === props.index ? "block" : "none"}
                 x = {props.x}
                 y = {props.y + 50}
                 fontSize = "10"
@@ -33,7 +33,7 @@ function Map(props){
                 y = {props.y}
                 height = {props.height}
                 width = {props.width}
-                fill = {props.chosen ? 'grey' : hover || props.seatStyle === props.index + 1 ? "blue" : "black" }>
+                fill = {props.chosen ? 'grey' : hover || props.seatStyle === props.index ? "blue" : "black" }>
             </rect> 
 
         </>

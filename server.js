@@ -1,4 +1,3 @@
-const { schedulingPolicy } = require('cluster');
 var admin = require('firebase-admin')
 var fs = require('fs')
 const { parse } = require('svgson');
