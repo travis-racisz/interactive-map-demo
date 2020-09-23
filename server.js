@@ -1,21 +1,21 @@
-var admin = require('firebase-admin')
-var fs = require('fs')
+const admin = require('firebase-admin')
+const fs = require('fs')
 const { parse } = require('svgson');
-var readStream = fs.createReadStream('./DemoSVG.svg', 'utf-8')
+const readStream = fs.createReadStream('./DemoSVG.svg', 'utf-8')
 
-var serviceAccount = require("/Users/travisracisz/Downloads/interactive-map-f5148-firebase-adminsdk-67sa6-f572d3da1a.json");
+const serviceAccount = require("/Users/travisracisz/Downloads/interactive-map-f5148-firebase-adminsdk-67sa6-f572d3da1a.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://interactive-map-f5148.firebaseio.com"
 });
 
-var db = admin.database()
-var ref = db.ref()
-var row = ["A", "B", "C", "D"]
-var rowIndex = 1 
-var seats = []
-var data = ''
+const db = admin.database()
+const ref = db.ref()
+const row = ["A", "B", "C", "D"]
+let rowIndex = 1 
+const seats = []
+let data = ''
 
 
 
@@ -53,8 +53,8 @@ function seatGenerator(rowSize, rowLetter){
  }).on('end', () => { 
      parse(data).then(json => { 
          svg = json
-         var result = svg.children.filter(item => item.name === 'rect')
-         for(var i = 0; i < result.length; i++){
+         let result = svg.children.filter(item => item.name === 'rect')
+         for(let i = 0; i < result.length; i++){
                  result[i].seat = seats[i]
                  result[i].chosen = false
                  result[i].attributes.height = Number(result[i].attributes.height)
@@ -62,7 +62,10 @@ function seatGenerator(rowSize, rowLetter){
                  result[i].attributes.x = Number(result[i].attributes.x)
                  result[i].attributes.y = Number(result[i].attributes.y)
             }
-        // ref.set(result)
+            // ref.set(result)
+                ref.once('value', (snapshot) => { 
+                    snapshot.val().length === 56 ? console.log(`${snapshot.val().length} booths were pushed out of 56`) : console.log(`something went wrong only ${snapshot.val().length} booths were pushed out of 56`)
+                })
      })
      .catch((err) => console.log(err))
  })

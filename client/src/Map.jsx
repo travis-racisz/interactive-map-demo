@@ -9,7 +9,7 @@ function Map(props){
     }
 
     function handleClick(){ 
-       var index = props.index 
+       const index = props.index 
         props.updateStyle(index)
     }
 

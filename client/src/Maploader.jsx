@@ -24,15 +24,16 @@ var firebaseConfig = {
 
 function Maploader(){ 
 
-    var [seats, setSeats] = useState([])
-    var [seatStyle, setSeatStyle] = useState()
+    const [seats, setSeats] = useState([])
+    const [seatStyle, setSeatStyle] = useState()
+
 
 
     
     useEffect(() => {
-            var mapRef = firebase.database().ref()
+            const mapRef = firebase.database().ref()
             mapRef.on('value', snapshot => { 
-                var seats = new Array()
+                let seats = []
                snapshot.forEach(childSnapshot => { 
                    seats.push(childSnapshot.val())
                    setSeats(() => ([
@@ -41,12 +42,12 @@ function Maploader(){
                })
             })
     }, [])
-
+ 
     function handleSubmit(i){ 
-        var index = i
-       var seatRef = firebase.database().ref('/' + index)
+        let index = i
+       const seatRef = firebase.database().ref('/' + index)
         seatRef.once('value', snapshot => { 
-            var chosenSeat = snapshot.val()
+            let chosenSeat = snapshot.val()
             chosenSeat.chosen = true
             seatRef.set(chosenSeat)
         })
@@ -64,12 +65,12 @@ function Maploader(){
                     index = {index}
                     seatStyle = {seatStyle}
                     updateStyle = {updateStyle}
-                    x = {seat && seat.attributes.x} 
-                    y = {seat && seat.attributes.y} 
-                    seat = {seat && seat.seat} 
-                    chosen = {seat && seat.chosen} 
-                    height = {seat && seat.attributes.height} 
-                    width = {seat && seat.attributes.width}
+                    x = {seat.attributes.x} 
+                    y = {seat.attributes.y} 
+                    seat = {seat.seat} 
+                    chosen = {seat.chosen} 
+                    height = {seat.attributes.height} 
+                    width = {seat.attributes.width}
                     />
             )}
             </svg>
